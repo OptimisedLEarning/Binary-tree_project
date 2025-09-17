@@ -79,8 +79,8 @@ console.log(myTree.height(myTree.root)  )
 
 console.log("depth of tree")
 
-
-console.log(myTree.depth(500))
+console.log("lets see the values of any leaf nopde ")
+console.log(myTree.depth(500)) /// 
 
 
 
