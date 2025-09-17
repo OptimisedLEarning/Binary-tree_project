@@ -4,6 +4,8 @@ const array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 
 const myTree = new Tree(array);
 
+
+
 console.log("Tree built from array:", array);
 
 
@@ -27,8 +29,9 @@ myTree.prettyPrint();
 
 console.log("Inorder traversal:");
 myTree.inorder(myTree.root);
+
 console.log("Preorder traversal:");
-myTree.preOder(myTree.root);
+myTree.preOrder(myTree.root);
 console.log("Postorder traversal:");
 myTree.postOder(myTree.root);
 myTree.delete(67);
@@ -77,7 +80,7 @@ console.log(myTree.height(myTree.root)  )
 console.log("depth of tree")
 
 
-console.log(myTree.depth(myTree.root))
+console.log(myTree.depth(500))
 
 
 

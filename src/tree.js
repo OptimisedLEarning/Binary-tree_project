@@ -74,37 +74,67 @@ insertNode(node, data) {
 
 // A utility function to do inorder
 // tree traversal
- inorder(root) {
-    if (root !== null) {
-        this.inorder(root.left);
-       
-        console.log(root.data + " ");
-       
-        this.inorder(root.right);
+// In-order traversal method
+  inorder(node = this.root, result = []) {
+    // *** BASE CASE ***
+    // If the node is null, stop the recursion for this path.
+    if (node === null) {
+      return result;
     }
+
+    // 1. Traverse the left subtree
+    this.inorder(node.left, result);
+
+    // 2. Visit the root node (e.g., add its data to the result array)
+    result.push(node.data);
+
+    // 3. Traverse the right subtree
+    this.inorder(node.right, result);
+
+    return result;
+  }
+
+
+
+
+preOrder(node = this.root, result = []) {
+    // This is the crucial base case that stops the recursion.
+    // When a leaf's child (which is null) is reached, the function simply returns.
+    if (node == null) {
+        return result; 
+    }
+
+    // 1. VISIT the current node
+    // You process the node's data before doing anything else.
+    result.push(node.data);
+
+    // 2. Traverse the LEFT subtree
+    // You make a recursive call on the left child.
+    this.preOrder(node.left, result);
+
+    // 3. Traverse the RIGHT subtree
+    // After the entire left subtree is finished, you move to the right.
+    this.preOrder(node.right, result); 
+    
+    // Finally, return the accumulated result.
+    return result;
 }
 
 
 
-preOder(root) {
-    if (root !== null) {
-       
-        console.log(root.data + " ");   // data part of node
-       
-        this.preOder(root.left);    // traverse left subtree
-       
-        this.preOder(root.right); // traverse right subtree
-    }
-}
+postOder(node = this.root, result = []) {
+    if (node  === null) {
+        return result ;
+       }
 
-
-postOder(root) {
-    if (root !== null) {
-       
-        this.postOder(root.left);    // traverse left subtree
-        this.postOder(root.right); // traverse right subtree
-        console.log(root.data + " ");   // data part of node
-    }
+    // 1. Traverse the LEFT subtree
+    this.postOder(node.left, result);
+    // 2. Traverse the RIGHT subtree
+    this.postOder(node.right, result);
+    // 3. VISIT the current node
+    result.push(node.data);
+    // Finally,
+    return result;
 }
 
 
@@ -257,7 +287,7 @@ levelOrderHelper_Recursive(queue, callback) {
 
 height(node) {
     if (!node) {
-        return  0; // height of empty tree is 0
+        return  -1; // height of empty tree is -1
     }
     const leftHeight = this.height(node.left);
     const rightHeight = this.height(node.right);
@@ -289,23 +319,27 @@ depth(data) {
 }
 
 
-isBalanced() {
+isBalanced(node = this.root) {
 
-        if (this.root === null) {
-            return true; // An empty tree is balanced
-        }
-        const leftHeight = this.height(this.root.left);
-        const rightHeight = this.height(this.root.right);
+
+      const checkBalance = (currentNode) => {
+    if (currentNode === null) {
+        return true; // An empty tree is balanced
+    }
+    const leftHeight = checkBalance(currentNode.left);
+    const rightHeight = checkBalance(currentNode.right);
 
       if (leftHeight === -1) return -1; // Propagate unbalance
 
        if (rightHeight === -1) return -1; // Propagate unbalance
        if (Math.abs(leftHeight - rightHeight) > 1) return -1; // Unbalanced
-        
-        Math.max(leftHeight, rightHeight) + 1; // Balanced
 
-       return this.isBalanced() !== -1; // If -1 was returned, tree is unbalanced
+       return Math.max(leftHeight, rightHeight) + 1; // Balanced
+   }
+
+       return checkBalance(node) !== -1; // If -1 was returned, tree is unbalanced
 }
+
 
 
 
@@ -314,11 +348,15 @@ isBalanced() {
    */
   rebalance() {
     const inorderNodes = this.inorder();
+
     this.root = this.buildTree(inorderNodes);
   }
 
   
   }
+
+
+
 
 
 
